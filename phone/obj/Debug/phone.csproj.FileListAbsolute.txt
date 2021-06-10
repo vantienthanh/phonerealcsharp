@@ -1,0 +1,16 @@
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\phone.exe.config
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\phone.exe
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\phone.pdb
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.csprojAssemblyReference.cache
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.Form1.resources
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.Properties.Resources.resources
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.csproj.GenerateResource.cache
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.exe
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.pdb
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\System.Net.Http.Extensions.dll
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\System.Net.Http.Primitives.dll
+C:\Users\Administrator\Desktop\phone\phone\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\Desktop\phone\phone\obj\Debug\phone.csproj.CopyComplete
