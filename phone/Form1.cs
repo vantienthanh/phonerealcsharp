@@ -55,7 +55,7 @@ namespace phone
             string jsonData = JsonConvert.SerializeObject(json);
             var content = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
             bool status = false;
-            int requestCount = 0;
+            
 
             //Thread thread = new Thread(() =>
             //{
@@ -96,9 +96,16 @@ namespace phone
 
             Thread thread = new Thread(async () =>
             {
+                int requestCount = 0;
                 do
                 {
                     status = await CheckHttpPostAsync(content, url);
+                    requestCount++;
+
+                    this.Invoke(new MethodInvoker(() =>
+                    {
+                        lbRequestCount.Text = requestCount.ToString();
+                    }));
 
                 } while (!status);
             });
