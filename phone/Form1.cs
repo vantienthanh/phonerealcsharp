@@ -21,10 +21,12 @@ namespace phone
     {
         string configPath = "Configs";
         string configFile = "Configs//api.txt";
+        static HttpClient client = new HttpClient();
 
         public Form1()
         {
             InitializeComponent();
+            initProject();
         }
 
         private void initProject()
@@ -37,69 +39,49 @@ namespace phone
             {
                 File.CreateText(configFile);
             }
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string content = System.IO.File.ReadAllText(configFile);
+            tbApiKey.Text = content;
+
+            setApiKeyHeader();
+            getGeneralInfo();
+        }
+
+        private void setApiKeyHeader()
+        {
+            if (client.DefaultRequestHeaders.Contains("X-API-Key"))
+            {
+                client.DefaultRequestHeaders.Remove("X-API-Key");
+            }
+
+            client.DefaultRequestHeaders.Add("X-API-Key", tbApiKey.Text);
         }
 
         private void btnSaveAPIKey_Click(object sender, EventArgs e)
         {
             File.WriteAllText(configFile, tbApiKey.Text);
+
+            setApiKeyHeader();
+            getGeneralInfo();
         }
 
-        private void btnSendRequest_Click(object sender, EventArgs e)
+        private async void btnSendRequest_Click(object sender, EventArgs e)
         {
-            string url = "https://www.phonerealus.com/api/line/changeService";
-            //string url = "https://www.phonerealus.com/api/checkService";
-            var json = new
-            {
-                services = "EBAY"
-            };
-            string jsonData = JsonConvert.SerializeObject(json);
-            var content = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
+            this.setApiKeyHeader();
+            lbRequestStatus.Text = "Running";
+            //string url1 = "https://www.phonerealus.com/api/line/changeService";
+            string url2 = "https://www.phonerealus.com/api/checkService";
+
             bool status = false;
-            
-
-            //Thread thread = new Thread(() =>
-            //{
-            //    do
-            //    {
-            //        HttpClient client = new HttpClient();
-
-            //        // Add an Accept header for JSON format.
-            //        client.DefaultRequestHeaders.Accept.Add(
-            //        new MediaTypeWithQualityHeaderValue("application/json"));
-            //        client.DefaultRequestHeaders.Add("X-API-Key", "CD9j3UVeMG2nFUPZ3xXCWFTH");
-
-            //        HttpResponseMessage response = client.PostAsync(url, content).Result;
-            //        requestCount++;
-
-            //        this.Invoke(new MethodInvoker(() =>
-            //        {
-            //            lbRequestCount.Text = requestCount.ToString();
-            //        }));
-
-            //        if (response.IsSuccessStatusCode)
-            //        {
-            //            string dataObjects = response.Content.ReadAsStringAsync().Result;
-            //            JObject jsonResult = JObject.Parse(dataObjects);
-            //            string phoneNumber = jsonResult["phoneNumber"].ToString();
-
-            //            this.Invoke(new MethodInvoker(() =>
-            //            {
-            //                lbPhoneNumber.Text = phoneNumber;
-            //            }));
-
-            //            status = true;
-            //        }
-
-            //        client.Dispose();
-            //    } while (!status);
-            //});
 
             Thread thread = new Thread(async () =>
             {
                 int requestCount = 0;
                 do
                 {
-                    status = await CheckHttpPostAsync(content, url);
+                    status = await requestNewPhone();
                     requestCount++;
 
                     this.Invoke(new MethodInvoker(() =>
@@ -108,31 +90,111 @@ namespace phone
                     }));
 
                 } while (!status);
+
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    lbRequestStatus.Text = "Reddy";
+                }));
             });
 
             thread.IsBackground = true;
             thread.Start();
         }
 
-        async Task<bool> CheckHttpPostAsync(System.Net.Http.HttpContent content, string url)
+        private async Task getGeneralInfo()
         {
-            var client = new HttpClient();
+            string url = "https://www.phonerealus.com/api/account";
 
-            client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Add("X-API-Key", "CD9j3UVeMG2nFUPZ3xXCWFTH");
+            try
+            {
+                var response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    JObject jsonResult = JObject.Parse(result);
+
+                    lbEmail.Text = jsonResult["username"].ToString();
+                    lbBlance.Text = jsonResult["balance"].ToString();
+
+                    foreach(var item in jsonResult["transactions"])
+                    {
+                        List<string> dataRows = new List<string>();
+                        dataRows.Add((string)item["description"]);
+                        dataRows.Add((string)item["amount"]);
+                        dataRows.Add((string)item["timestamp"]);
+                        dataGridViewTransaction.Rows.Add(dataRows.ToArray());
+                    }
+                } else
+                {
+                    lbEmail.Text = "No data";
+                    lbBlance.Text = "0";
+                    dataGridViewTransaction.Rows.Clear();
+                    dataGridViewTransaction.Refresh();
+                }
+            }
+            catch (Exception e)
+            {
+                lbEmail.Text = "No data";
+                lbBlance.Text = "0";
+                dataGridViewTransaction.Rows.Clear();
+                dataGridViewTransaction.Refresh();
+            }
+        }
+
+        private async Task<bool> requestNewPhone()
+        {
+            string url = "https://www.phonerealus.com/api/line/changeService";
+
+            string jsonData = JsonConvert.SerializeObject(new { services = "EBAY" });
+            var content = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
 
             try
             {
                 var response = await client.PostAsync(url, content);
+
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
                     JObject jsonResult = JObject.Parse(result);
                     string phoneNumber = jsonResult["phoneNumber"].ToString();
 
+                    this.Invoke(new MethodInvoker(() =>
+                    {
+                        lbPhoneNumber.Text = phoneNumber.ToString();
+                    }));
+
                     return true;
                 } else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
+
+        private async Task<bool> getResponseSMS(string url)
+        {
+            string jsonData = JsonConvert.SerializeObject(new { services = "EBAY" });
+            var content = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
+
+            try
+            {
+                var response = await client.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    JObject jsonResult = JObject.Parse(result);
+                    //string phoneNumber = jsonResult["phoneNumber"].ToString();
+
+                    return true;
+                }
+                else
                 {
                     return false;
                 }
