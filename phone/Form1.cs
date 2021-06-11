@@ -71,8 +71,6 @@ namespace phone
         {
             this.setApiKeyHeader();
             lbRequestStatus.Text = "Running";
-            //string url1 = "https://www.phonerealus.com/api/line/changeService";
-            string url2 = "https://www.phonerealus.com/api/checkService";
 
             bool status = false;
 
@@ -151,28 +149,36 @@ namespace phone
 
             try
             {
+                System.Threading.Thread.Sleep(1000);
                 var response = await client.PostAsync(url, content);
+
+                string result = await response.Content.ReadAsStringAsync();
+                JObject jsonResult = JObject.Parse(result);
+
+                //Console.WriteLine(jsonResult);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string result = await response.Content.ReadAsStringAsync();
-                    JObject jsonResult = JObject.Parse(result);
                     string phoneNumber = jsonResult["phoneNumber"].ToString();
 
                     this.Invoke(new MethodInvoker(() =>
                     {
+
                         lbPhoneNumber.Text = phoneNumber.ToString();
                     }));
 
                     return true;
                 } else
                 {
+                    Console.WriteLine(jsonResult);
                     return false;
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine("======================");
+                Console.WriteLine("Delay 2s");
+                System.Threading.Thread.Sleep(2000);
                 return false;
             }
         }
