@@ -29,34 +29,35 @@ namespace phone
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnSendRequest = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tbApiKey = new System.Windows.Forms.TextBox();
             this.btnSaveAPIKey = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbRequestStatus = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.lbPhoneNumber = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lbRequestCount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lbRequestStatus = new System.Windows.Forms.Label();
             this.dataGridViewTransaction = new System.Windows.Forms.DataGridView();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.lbEmail = new System.Windows.Forms.Label();
             this.lbBlance = new System.Windows.Forms.Label();
-            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTransaction)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSendRequest
             // 
-            this.btnSendRequest.Location = new System.Drawing.Point(12, 245);
+            this.btnSendRequest.Location = new System.Drawing.Point(12, 247);
             this.btnSendRequest.Name = "btnSendRequest";
-            this.btnSendRequest.Size = new System.Drawing.Size(266, 30);
+            this.btnSendRequest.Size = new System.Drawing.Size(521, 35);
             this.btnSendRequest.TabIndex = 0;
             this.btnSendRequest.Text = "Send request";
             this.btnSendRequest.UseVisualStyleBackColor = true;
@@ -97,10 +98,28 @@ namespace phone
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.lbRequestCount);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(12, 284);
+            this.panel1.Location = new System.Drawing.Point(12, 294);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(266, 110);
+            this.panel1.Size = new System.Drawing.Size(251, 100);
             this.panel1.TabIndex = 4;
+            // 
+            // lbRequestStatus
+            // 
+            this.lbRequestStatus.AutoSize = true;
+            this.lbRequestStatus.Location = new System.Drawing.Point(101, 69);
+            this.lbRequestStatus.Name = "lbRequestStatus";
+            this.lbRequestStatus.Size = new System.Drawing.Size(38, 13);
+            this.lbRequestStatus.TabIndex = 5;
+            this.lbRequestStatus.Text = "Reddy";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "Request task:";
             // 
             // lbPhoneNumber
             // 
@@ -138,24 +157,6 @@ namespace phone
             this.label2.TabIndex = 0;
             this.label2.Text = "Request count:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 69);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Request task:";
-            // 
-            // lbRequestStatus
-            // 
-            this.lbRequestStatus.AutoSize = true;
-            this.lbRequestStatus.Location = new System.Drawing.Point(101, 69);
-            this.lbRequestStatus.Name = "lbRequestStatus";
-            this.lbRequestStatus.Size = new System.Drawing.Size(38, 13);
-            this.lbRequestStatus.TabIndex = 5;
-            this.lbRequestStatus.Text = "Reddy";
-            // 
             // dataGridViewTransaction
             // 
             this.dataGridViewTransaction.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -168,6 +169,27 @@ namespace phone
             this.dataGridViewTransaction.ReadOnly = true;
             this.dataGridViewTransaction.Size = new System.Drawing.Size(521, 178);
             this.dataGridViewTransaction.TabIndex = 6;
+            // 
+            // description
+            // 
+            this.description.HeaderText = "Description";
+            this.description.Name = "description";
+            this.description.ReadOnly = true;
+            this.description.Width = 400;
+            // 
+            // amount
+            // 
+            this.amount.HeaderText = "Amount";
+            this.amount.Name = "amount";
+            this.amount.ReadOnly = true;
+            this.amount.Width = 50;
+            // 
+            // time
+            // 
+            this.time.HeaderText = "Time";
+            this.time.Name = "time";
+            this.time.ReadOnly = true;
+            this.time.Width = 150;
             // 
             // label5
             // 
@@ -205,24 +227,6 @@ namespace phone
             this.lbBlance.TabIndex = 10;
             this.lbBlance.Text = "0";
             // 
-            // description
-            // 
-            this.description.HeaderText = "Description";
-            this.description.Name = "description";
-            this.description.Width = 400;
-            // 
-            // amount
-            // 
-            this.amount.HeaderText = "Amount";
-            this.amount.Name = "amount";
-            this.amount.Width = 50;
-            // 
-            // time
-            // 
-            this.time.HeaderText = "Time";
-            this.time.Name = "time";
-            this.time.Width = 150;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,6 +242,7 @@ namespace phone
             this.Controls.Add(this.tbApiKey);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSendRequest);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);

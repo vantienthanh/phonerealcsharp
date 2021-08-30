@@ -69,8 +69,17 @@ namespace phone
 
         private async void btnSendRequest_Click(object sender, EventArgs e)
         {
+            if(lbEmail.Text == "No data")
+            {
+                MessageBox.Show("API Key Error!!!", "Wrong API");
+                return;
+            }
+
             this.setApiKeyHeader();
             lbRequestStatus.Text = "Running";
+            lbPhoneNumber.Text = "In Progress...";
+            btnSendRequest.Text = "In Progress...";
+            btnSendRequest.Enabled = false;
 
             bool status = false;
 
@@ -92,6 +101,8 @@ namespace phone
                 this.Invoke(new MethodInvoker(() =>
                 {
                     lbRequestStatus.Text = "Reddy";
+                    btnSendRequest.Text = "Send request";
+                    btnSendRequest.Enabled = true;
                 }));
             });
 
