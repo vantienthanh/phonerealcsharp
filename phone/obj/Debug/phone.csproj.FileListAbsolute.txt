@@ -30,3 +30,7 @@ C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.csproj.CoreCompi
 C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.csproj.CopyComplete
 C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.exe
 C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.pdb
+C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\bin\Debug\phone.exe.manifest
+C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\bin\Debug\phone.application
+C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.exe.manifest
+C:\Users\ADMIN\OneDrive\Desktop\phonereal\phone\obj\Debug\phone.application
